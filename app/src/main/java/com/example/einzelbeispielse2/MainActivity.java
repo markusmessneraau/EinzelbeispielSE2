@@ -29,19 +29,13 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-@SuppressLint("SetTextI18n")
+
 public class MainActivity extends AppCompatActivity {
 
     EditText Matrikelnummer;
     TextView textView;
     TextView ergebnis;
-
     private String msg1;
-    private String msg2;
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,16 +48,12 @@ public class MainActivity extends AppCompatActivity {
         textView = findViewById(R.id.textView1);
         ergebnis = findViewById(R.id.Ergebnis1);
 
-
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
-
-
     public void buttonNext(View view) throws InterruptedException {
         // Matrikelnummer aus dem EditText abrufen
         String matrikelnummer = Matrikelnummer.getText().toString();
@@ -86,7 +76,45 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private DataInputStream dis;
+    @SuppressLint("SetTextI18n")
+    public void quersummeBerechnen(View view) {
+
+        String zahl = Matrikelnummer.getText().toString();
+
+        if (zahl.isEmpty()){
+
+            Toast.makeText(this, "Feld darf nicht leer sein/Zahl zu lang", Toast.LENGTH_SHORT).show();
+
+        }else {
+
+
+            int size = zahl.length();
+            int sum = 0;
+            boolean ungerade = true;
+
+            if (size % 2 == 0) {
+
+                ungerade = false;
+            }
+
+            int x = Integer.parseInt(zahl);
+
+            while (x > 0) {
+                int digit = x % 10;
+                if (ungerade) {
+                    sum += digit;
+                } else {
+                    sum -= digit;
+                }
+                ungerade = !ungerade;
+                x = x / 10;  //-> löscht letze ziffer
+            }
+            ergebnis.setText(Integer.toString(sum));
+
+        }
+    }
+
+
     private DataOutputStream dos;
 
     public class myThread extends Thread implements Runnable {
@@ -133,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
 
 }
 
