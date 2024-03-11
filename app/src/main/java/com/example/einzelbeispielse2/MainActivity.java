@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (zahl.isEmpty()){
 
-            Toast.makeText(this, "Feld darf nicht leer sein/Zahl zu lang", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Feld darf nicht leer sein", Toast.LENGTH_SHORT).show();
 
         }else {
 
